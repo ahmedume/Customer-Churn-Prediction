@@ -9,9 +9,9 @@
 - [ ] Create `requirements.txt` — skip until deployment (YAGNI)
 
 ### Phase 2: Preprocessing & Feature Engineering
-- [ ] Handle missing values, remove duplicates, encode categoricals, scale numerics
-- [ ] Train/test split
-- [ ] Feature selection (correlation, mutual info, etc.)
+- [x] Handle missing values, remove duplicates, encode categoricals, scale numerics
+- [x] Train/test split
+- [x] Feature importance (Random Forest baseline)
 - [ ] Compare model performance before/after feature engineering
 
 ### Phase 3: Model Training
