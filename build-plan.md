@@ -12,13 +12,13 @@
 - [x] Handle missing values, remove duplicates, encode categoricals, scale numerics
 - [x] Train/test split
 - [x] Feature importance (Random Forest baseline)
-- [ ] Compare model performance before/after feature engineering
+- [x] Compare model performance before/after feature engineering
 
 ### Phase 3: Model Training
-- [ ] Train baseline: Logistic Regression, Random Forest, XGBoost
-- [ ] Hyperparameter tuning via GridSearchCV/RandomizedSearchCV
-- [ ] Evaluate: Accuracy, Precision, Recall, F1, ROC-AUC
-- [ ] Explainability with SHAP
+- [x] Train baseline: Logistic Regression, Random Forest, XGBoost
+- [x] Hyperparameter tuning via GridSearchCV/RandomizedSearchCV
+- [x] Evaluate: Accuracy, Precision, Recall, F1, ROC-AUC
+- [x] Explainability with SHAP
 
 ### Phase 4: Persistence & API
 - [ ] Save best model with Joblib
