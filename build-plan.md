@@ -21,15 +21,15 @@
 - [x] Explainability with SHAP
 
 ### Phase 4: Persistence & API
-- [ ] Save best model with Joblib
-- [ ] FastAPI `POST /predict` endpoint
-- [ ] Load model without retraining
-- [ ] Input validation with Pydantic
+- [x] Save best model with Joblib
+- [x] FastAPI `POST /predict` endpoint
+- [x] Load model without retraining
+- [x] Input validation with Pydantic
 
 ### Phase 5: Web Interface
-- [ ] Bootstrap HTML form for customer input
-- [ ] Display prediction + probability
-- [ ] Connect to API
+- [x] Bootstrap HTML form for customer input
+- [x] Display prediction + probability
+- [x] Connect to API
 
 ### Phase 6: Documentation & Polish
 - [ ] Installation steps, dataset info, training procedure
