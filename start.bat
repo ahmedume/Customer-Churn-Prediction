@@ -1,6 +1,4 @@
 @echo off
 echo Starting Churn Prediction API...
-echo Open http://localhost:8000 in your browser
-echo Press Ctrl+C to stop.
+start http://localhost:8000
 py -u run.py
-pause

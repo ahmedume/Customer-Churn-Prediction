@@ -6,7 +6,7 @@
 - [x] Set up folder structure (`data/`, `notebooks/`, `models/`, `api/`, `templates/`, `static/`, `utils/`)
 - [x] Move dataset into `data/`
 - [x] Initial EDA in notebook: shape, dtypes, missing values, duplicates, target distribution
-- [ ] Create `requirements.txt` — skip until deployment (YAGNI)
+- [x] Create `requirements.txt`
 
 ### Phase 2: Preprocessing & Feature Engineering
 - [x] Handle missing values, remove duplicates, encode categoricals, scale numerics
@@ -32,11 +32,12 @@
 - [x] Connect to API
 
 ### Phase 6: Documentation & Polish
-- [ ] Installation steps, dataset info, training procedure
-- [ ] API docs (FastAPI auto-docs)
-- [ ] README.md with screenshots
+- [x] Installation steps, dataset info, training procedure
+- [x] API docs (FastAPI auto-docs)
+- [x] README.md with screenshots
+- [x] Unit tests (API + UI)
+- [x] report.pdf — project technical report
 
 ### Bonus (if time permits)
 - [ ] Dockerfile
-- [ ] Unit tests
 - [ ] SQLite prediction logging

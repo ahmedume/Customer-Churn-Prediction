@@ -1,9 +1,22 @@
 [project]
 name = "customer-churn-prediction"
-version = "0.1.0"
-description = "Add your description here"
+version = "2.0.0"
+description = "End-to-end ML system predicting telecom customer churn"
 readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
+    "fastapi>=0.100.0",
+    "uvicorn>=0.20.0",
+    "pydantic>=2.0.0",
+    "joblib>=1.2.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.3.0",
+    "xgboost>=1.7.0",
+    "shap>=0.40.0",
+    "matplotlib>=3.5.0",
+    "seaborn>=0.12.0",
+    "numpy>=1.24.0",
+    "python-multipart>=0.0.5",
+    "httpx>=0.24.0",
     "ipykernel>=7.3.0",
 ]
