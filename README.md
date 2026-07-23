@@ -380,6 +380,18 @@ pytest test_ui.py -v
 
 ---
 
+### Interface
+
+## WEB UI
+
+<img width="1280" height="900" alt="web-ui-result" src="https://github.com/user-attachments/assets/50cc2cb1-198d-432a-a58c-2d7becfc080d" />
+
+## API DOCS
+
+<img width="1280" height="900" alt="api-docs-predict" src="https://github.com/user-attachments/assets/38b97ccb-54f3-4438-b9f2-c9e14e381359" />
+
+---
+
 ## License
 
 MIT
