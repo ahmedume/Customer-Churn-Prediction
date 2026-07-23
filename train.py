@@ -26,14 +26,16 @@ df["TotalCharges"] = df["TotalCharges"].fillna(0)
 df.drop("customerID", axis=1, inplace=True)
 
 # --- Encode ---
-binary_cols = ["Partner", "Dependents", "PhoneService", "PaperlessBilling", "Churn"]
+binary_cols = ["Churn"]
 for c in binary_cols:
     df[c] = (df[c] == "Yes").astype(int)
 
+df.drop(["gender", "MultipleLines"], axis=1, inplace=True, errors="ignore")
+
 cat_cols = [
-    "gender", "MultipleLines", "InternetService", "OnlineSecurity",
-    "OnlineBackup", "DeviceProtection", "TechSupport", "StreamingTV",
-    "StreamingMovies", "Contract", "PaymentMethod",
+    "Partner", "Dependents", "PhoneService", "PaperlessBilling",
+    "InternetService", "OnlineSecurity", "OnlineBackup", "DeviceProtection",
+    "TechSupport", "StreamingTV", "StreamingMovies", "Contract", "PaymentMethod",
 ]
 df = pd.get_dummies(df, columns=cat_cols, drop_first=True, dtype=int)
 
@@ -162,16 +164,22 @@ print(f"\n--- Random Forest (tuned) ---")
 print(classification_report(y_test, y_pred))
 print(f"ROC-AUC: {roc_auc_score(y_test, y_prob):.4f}")
 
-# --- Save ---
+# --- Save all models ---
 joblib.dump(best_rf, "models/churn_model.pkl")
+joblib.dump(models["Logistic Regression"], "models/logistic_regression.pkl")
+joblib.dump(models["Random Forest"], "models/random_forest_baseline.pkl")
+joblib.dump(xgb_model, "models/xgboost.pkl")
 joblib.dump(scaler, "models/scaler.pkl")
 feature_cols = X_train.columns.tolist()
 joblib.dump(feature_cols, "models/feature_cols.pkl")
-print(f"\nSaved model, scaler, and {len(feature_cols)} feature columns to models/")
+print(f"\nSaved models, scaler, and {len(feature_cols)} feature columns to models/")
 
 # Save splits for notebooks
-pd.DataFrame(X_train).to_parquet("data/X_train.parquet")
-pd.DataFrame(X_test).to_parquet("data/X_test.parquet")
-pd.DataFrame(y_train, columns=["Churn"]).to_parquet("data/y_train.parquet")
-pd.DataFrame(y_test, columns=["Churn"]).to_parquet("data/y_test.parquet")
-print("Saved train/test splits to data/")
+try:
+    pd.DataFrame(X_train).to_parquet("data/X_train.parquet")
+    pd.DataFrame(X_test).to_parquet("data/X_test.parquet")
+    pd.DataFrame(y_train, columns=["Churn"]).to_parquet("data/y_train.parquet")
+    pd.DataFrame(y_test, columns=["Churn"]).to_parquet("data/y_test.parquet")
+    print("Saved train/test splits to data/")
+except ImportError:
+    print("Skipped parquet export (pyarrow not installed)")

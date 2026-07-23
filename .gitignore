@@ -1,22 +1,55 @@
-# Python
+# ── Python ──────────────────────────────────────────────
 __pycache__/
 *.py[oc]
+*.pyc
+*.egg-info
 build/
 dist/
 wheels/
-*.egg-info
+*.egg
+
+# ── Testing ─────────────────────────────────────────────
 .pytest_cache/
+.htmlcov/
+*.coverage
+.coverage.*
+coverage/
+
+# ── Virtual Environment ─────────────────────────────────
+.venv/
+venv/
+env/
+
+# ── IDE / Editor ────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+opencode.json
+
+# ── Environment ─────────────────────────────────────────
 .env
+.env.local
+.env.production
 
-# Virtual environments
-.venv
+# ── Jupyter ─────────────────────────────────────────────
+.ipynb_checkpoints/
+*.nbdata
 
-# Generated reports
-report.pdf
+# ── Generated Reports ───────────────────────────────────
 Customer_Churn_Prediction_Report.docx
 
-# Jupyter
-.ipynb_checkpoints/
-
-# Internal planning
+# ── Internal Planning ───────────────────────────────────
 build-plan.md
+
+# ── Generated Data Splits (reproducible from train.py) ──
+data/*.parquet
+
+# ── Junk/Output-heavy Notebooks ─────────────────────────
+notebooks/executed_02.ipynb
+
+# ── Internship Task Spec (personal copy) ────────────────
+Machine_Learning_Internship_Task_Final.pdf

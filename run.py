@@ -1,11 +1,17 @@
 import joblib, uvicorn, warnings, pandas as pd
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
 warnings.filterwarnings("ignore")
-model = joblib.load("models/churn_model.pkl")
+
+models = {
+    "Random Forest (tuned)": joblib.load("models/churn_model.pkl"),
+    "Logistic Regression": joblib.load("models/logistic_regression.pkl"),
+    "Random Forest (baseline)": joblib.load("models/random_forest_baseline.pkl"),
+    "XGBoost": joblib.load("models/xgboost.pkl"),
+}
 feature_cols = joblib.load("models/feature_cols.pkl")
 col_idx = {c: i for i, c in enumerate(feature_cols)}
 
@@ -26,6 +32,8 @@ CONTRACT_ORD = {"Month-to-month": 0, "One year": 1, "Two year": 2}
 app = FastAPI(title="Churn Prediction API", version="2.0.0")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+MODEL_NAMES = list(models.keys())
+
 class CustomerInput(BaseModel):
     SeniorCitizen: int
     Partner: str
@@ -44,6 +52,7 @@ class CustomerInput(BaseModel):
     PaymentMethod: str
     MonthlyCharges: float
     TotalCharges: float
+    model_name: str = Field(default="Random Forest (tuned)", description=f"Model to use: {MODEL_NAMES}")
 
 class PredictionOut(BaseModel):
     churn: int
@@ -101,6 +110,7 @@ def predict(data: CustomerInput):
             row[col_idx[mapping[val]]] = 1.0
 
     row_df = pd.DataFrame([row], columns=feature_cols)
+    model = models.get(data.model_name, models["Random Forest (tuned)"])
     prob = float(model.predict_proba(row_df)[0, 1])
     return PredictionOut(churn=int(prob >= 0.5), probability=round(prob, 4))
 

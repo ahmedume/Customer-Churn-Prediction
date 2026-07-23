@@ -5,10 +5,15 @@ import json
 import joblib
 import pandas as pd
 
-MODEL_PATH = "models/churn_model.pkl"
+MODELS = {
+    "Random Forest (tuned)": "models/churn_model.pkl",
+    "Logistic Regression": "models/logistic_regression.pkl",
+    "Random Forest (baseline)": "models/random_forest_baseline.pkl",
+    "XGBoost": "models/xgboost.pkl",
+}
 FEATURES_PATH = "models/feature_cols.pkl"
 
-model = joblib.load(MODEL_PATH)
+model = joblib.load(MODELS["Random Forest (tuned)"])
 feature_cols = joblib.load(FEATURES_PATH)
 col_idx = {c: i for i, c in enumerate(feature_cols)}
 
@@ -75,17 +80,25 @@ def build_features(data):
     return pd.DataFrame([row], columns=feature_cols)
 
 
-def predict(data):
+def predict(data, model_name="Random Forest (tuned)"):
     row_df = build_features(data)
-    prob = float(model.predict_proba(row_df)[0, 1])
+    m = joblib.load(MODELS.get(model_name, MODELS["Random Forest (tuned)"]))
+    prob = float(m.predict_proba(row_df)[0, 1])
     return {"churn": int(prob >= 0.5), "probability": round(prob, 4)}
 
 
 if __name__ == "__main__":
+    model_name = "Random Forest (tuned)"
     if len(sys.argv) > 1:
-        with open(sys.argv[1]) as f:
-            sample = json.load(f)
-    else:
+        arg = sys.argv[1]
+        if arg in MODELS:
+            model_name = arg
+        else:
+            with open(arg) as f:
+                sample = json.load(f)
+    if len(sys.argv) > 2:
+        model_name = sys.argv[2]
+    if "sample" not in locals():
         sample = {
             "SeniorCitizen": 0, "Partner": "Yes", "Dependents": "No",
             "tenure": 12, "PhoneService": "Yes",
@@ -94,5 +107,6 @@ if __name__ == "__main__":
             "StreamingMovies": "Yes", "Contract": "Month-to-month", "PaperlessBilling": "Yes",
             "PaymentMethod": "Electronic check", "MonthlyCharges": 70.0, "TotalCharges": 840.0,
         }
-    result = predict(sample)
+    result = predict(sample, model_name)
+    print(f"Model: {model_name}")
     print(json.dumps(result, indent=2))

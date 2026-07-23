@@ -10,6 +10,15 @@
     <div class="container py-5">
         <h1 class="mb-4">Customer Churn Predictor</h1>
         <form id="churnForm" class="row g-3">
+            <div class="col-12 mb-2">
+                <label class="form-label fw-bold">Select Model</label>
+                <select class="form-select" name="model_name">
+                    <option value="Random Forest (tuned)" selected>Random Forest (tuned) — recommended</option>
+                    <option value="Logistic Regression">Logistic Regression</option>
+                    <option value="Random Forest (baseline)">Random Forest (baseline)</option>
+                    <option value="XGBoost">XGBoost</option>
+                </select>
+            </div>
             <div class="col-md-4">
                 <label class="form-label">Senior Citizen</label>
                 <select class="form-select" name="SeniorCitizen">
@@ -139,6 +148,7 @@
                 <div class="card-body text-center">
                     <h3 id="predictionText"></h3>
                     <p class="mb-0">Probability: <span id="probabilityText"></span></p>
+                    <small class="text-muted" id="modelUsed"></small>
                 </div>
             </div>
         </div>
@@ -152,6 +162,7 @@
             data.tenure = parseInt(data.tenure);
             data.MonthlyCharges = parseFloat(data.MonthlyCharges);
             data.TotalCharges = parseFloat(data.TotalCharges);
+            data.model_name = data.model_name || 'Random Forest (tuned)';
             const resp = await fetch('/predict', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -166,6 +177,8 @@
                 result.churn === 1 ? 'text-danger' : 'text-success';
             document.getElementById('probabilityText').textContent =
                 (result.probability * 100).toFixed(1) + '%';
+            document.getElementById('modelUsed').textContent =
+                'Model: ' + (data.model_name || 'Random Forest (tuned)');
         });
     </script>
 </body>
