@@ -382,4 +382,4 @@ pytest test_ui.py -v
 
 ## License
 
-This project was developed as part of an internship at Content Arcade.
+MIT
